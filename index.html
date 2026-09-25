@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz 18 Anos, Meu Amor! 💖 • Para a minha Princesinha</title>
+  
+  <!-- Favicon com tema fofo -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+  
+  <!-- Fontes do Google (Estilo qartinha.com.br & Sanrio) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Canvas de Chuva de Confetes & Corações -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Partículas e Ícones Sanrio Flutuantes de Fundo -->
+  <div class="floating-bg-container">
+    <div class="floating-item" style="left: 6%; animation-duration: 16s; font-size: 26px;">🐾</div>
+    <div class="floating-item" style="left: 18%; animation-duration: 22s; font-size: 22px;">💖</div>
+    <div class="floating-item" style="left: 28%; animation-duration: 14s; font-size: 24px;">🍮</div>
+    <div class="floating-item" style="left: 42%; animation-duration: 19s; font-size: 20px;">✨</div>
+    <div class="floating-item" style="left: 55%; animation-duration: 15s; font-size: 26px;">🎀</div>
+    <div class="floating-item" style="left: 68%; animation-duration: 21s; font-size: 24px;">🌸</div>
+    <div class="floating-item" style="left: 80%; animation-duration: 17s; font-size: 22px;">🎂</div>
+    <div class="floating-item" style="left: 92%; animation-duration: 18s; font-size: 25px;">💕</div>
+  </div>
+
+  <!-- ==========================================================================
+       TELA DE SENHA DE ACESSO: "meowversario"
+       ========================================================================== -->
+  <div id="password-gate" class="password-gate-overlay">
+    <div class="password-card" id="password-card">
+      <div class="password-icon-badge">🐾</div>
+      
+      <div class="gift-tag" style="background: #FCE4EC; color: #C2185B; border-color: #F8BBD0; margin-bottom: 14px;">
+        <span>🔐 Acesso Especial do Meu Amor</span>
+      </div>
+
+      <h2 class="unboxing-title" style="font-size: 1.8rem; margin-bottom: 8px;">Área Secreta do Meu Amor</h2>
+      <p class="unboxing-subtitle" style="margin-bottom: 16px;">
+        Para desbloquear o seu presente especial de 18 anos, digite a palavrinha mágica:
+      </p>
+
+      <form id="password-form" onsubmit="event.preventDefault(); window.checkSitePassword && window.checkSitePassword();">
+        <div class="password-input-wrap">
+          <input
+            type="password"
+            id="site-password-input"
+            class="password-input-field"
+            placeholder="Digite a senha mágica..."
+            autocomplete="current-password"
+            required
+          />
+          <button type="button" id="toggle-pw-visibility" class="password-toggle-eye" title="Mostrar/ocultar senha">👁️</button>
+        </div>
+
+        <div id="password-error-msg" class="password-error-text">
+          Ops! Senha incorreta, Tente de novo! 🥺
+        </div>
+
+        <button type="submit" id="submit-password-btn" class="btn-open-gift" style="width: 100%; justify-content: center;">
+          <span>Desbloquear Meu Presente</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TELA INICIAL: ABERTURA "PRESENTE PARA VOCÊ" (UNBOXING INTERATIVO)
+       ========================================================================== -->
+  <div id="gift-overlay" class="gift-unboxing-overlay">
+    <div class="gift-unboxing-card">
+      <div class="gift-tag">
+        <span>✨ De: Amor da sua Vida</span>
+        <span>•</span>
+        <span>Para: Minha Esposa 💖</span>
+      </div>
+      
+      <h2 class="unboxing-title">Um Presente Para Você!</h2>
+      <p class="unboxing-subtitle">Preparei cada detalhe deste cantinho com todo o carinho do universo especialmente para os seus 18 anos...</p>
+
+      <!-- Caixa de Presente 3D Pastel com Pompompurin -->
+      <div id="gift-box-wrapper" class="gift-box-wrapper" title="Clique para desatar o laço!">
+        <div class="gift-bow"></div>
+        <div class="gift-lid"></div>
+        <div class="gift-box"></div>
+      </div>
+
+      <button id="open-gift-btn" class="btn-open-gift">
+        <span>🎁 Abrir Meu Presente Especial</span>
+        <span>✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CABEÇALHO COM TÍTULO E PLAYER DE MÚSICA ROMÂNTICO
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-badge" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        <div class="brand-icon svg-pompompurin-heart"></div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">Feliz Aniversário 🎂</span>
+          <span class="brand-subtitle">30 de Setembro • O dia mais importante do ano 🐾</span>
+        </div>
+      </div>
+
+      <!-- Player de Música Pastel -->
+      <div class="music-widget">
+        <div id="music-disk" class="music-disk">
+          <span style="font-size: 14px;">🎵</span>
+        </div>
+        <button id="music-toggle-btn" class="music-btn" title="Tocar melodia suave">🎵</button>
+        <div class="music-info">
+          <span id="music-status-text" class="music-title">Melodia Romântica</span>
+          <label for="custom-audio-file" class="music-custom-label">Colocar nossa música</label>
+          <input type="file" id="custom-audio-file" accept="audio/*" style="display: none;" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MENU DE NAVEGAÇÃO POR ABAS (5 ABAS PRINCIPAIS)
+       ========================================================================== -->
+  <nav class="tabs-navigation-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="tab-home">
+        <span>💖</span>
+        <span>1. Nosso Amor & 18 Anos</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-gallery">
+        <span>📸</span>
+        <span>2. Mural de Galeria do Meu Neném</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-words">
+        <span>🧩</span>
+        <span>3. Jogo de Palavras</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-tree">
+        <span>🌳</span>
+        <span>4. Árvore de Presentes</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-conclusion">
+        <span>💌</span>
+        <span>5. O Começo de Nós</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       CONTEÚDO PRINCIPAL (PAINÉIS DE CADA ABA)
+       ========================================================================== -->
+  <main class="main-content">
+
+    <!-- ----------------------------------------------------------------------
+         ABA 1: PRINCIPAL (TEMPORIZADOR DE 18 ANOS & DECLARAÇÃO DE AMOR)
+         ---------------------------------------------------------------------- -->
+    <section id="tab-home" class="tab-pane active">
+      
+      <!-- Cartão do Temporizador dos 18 Anos -->
+      <div class="countdown-card-hero">
+        <span class="countdown-badge">🎂 18 ANOS • 30 DE SETEMBRO ÀS 00:00 🎂</span>
+        <h1 class="countdown-title">A Chegada da Sua Maioridade</h1>
+        <p id="countdown-status-sub" class="countdown-sub">Contando cada segundo com o coração transbordando de orgulho e amor...</p>
+
+        <!-- Grade de Tempo (Dias, Horas, Minutos, Segundos) -->
+        <div class="timer-grid">
+          <div class="timer-box">
+            <span id="timer-days" class="timer-number">00</span>
+            <span class="timer-label">Dias</span>
+          </div>
+          <div class="timer-box">
+            <span id="timer-hours" class="timer-number">00</span>
+            <span class="timer-label">Horas</span>
+          </div>
+          <div class="timer-box">
+            <span id="timer-mins" class="timer-number">00</span>
+            <span class="timer-label">Minutos</span>
+          </div>
+          <div class="timer-box">
+            <span id="timer-secs" class="timer-number">00</span>
+            <span class="timer-label">Segundos</span>
+          </div>
+        </div>
+
+        <div id="milestone-banner" class="timer-milestone-banner">
+          🎉 VOCÊ COMPLETOU 18 ANOS! BEM-VINDA À VIDA ADULTA, MEU AMOR MAIOR! 🎉
+        </div>
+      </div>
+
+      <!-- Carta de Declaração de Amor Estilo qartinha.com.br -->
+      <article class="romantic-letter-container">
+        <div class="washi-tape-top-left"></div>
+        <div class="washi-tape-top-right"></div>
+
+        <header class="letter-header-grid">
+          <div class="letter-sender-info">
+            <h2 class="letter-recipient-title">Para a Razão dos Meus Melhores Sorrisos,</h2>
+          </div>
+          <div class="letter-stamps-wrap">
+            <div class="postal-stamp-box svg-stamp"></div>
+            <div class="postmark-round">
+              <span>CORREIO DO AMOR</span>
+              <span style="font-size: 11px;">18 ANOS</span>
+              <span>OFICIAL</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="letter-body">
+          <p>
+            Hoje é um dia que não cabe em palavras, mas que eu vou tentar desenhar em cada linha deste cantinho feito exclusivamente para você. Chegar aos <strong>18 anos</strong> é atravessar uma ponte mágica: o mundo te chama de adulta, a vida se abre em horizontes infinitos, mas para mim, você continuará sendo para todo o sempre o <strong>meu neném</strong>, a pessoa mais doce, preciosa e radiante que já cruzou o meu caminho.
+          </p>
+          <p>
+            Ver você crescer, sonhar e conquistar o seu espaço me enche de um orgulho que aperta o peito da forma mais gostosa possível. Você tem esse dom raro de iluminar qualquer ambiente com uma risada, de transformar os dias mais cinzentos em um domingo ensolarado com cheirinho de pudim, e de fazer o meu coração bater acelerado exatamente como bateu no primeiro dia em que te vi.
+          </p>
+          <p>
+            Quero que você saiba que este aniversário é especial não só porque você completa a maioridade, mas porque marca a consagração do nosso amor. <span class="letter-highlight">Eu estarei aqui para segurar a sua mão em cada nova responsabilidade</span>, para comemorar cada vitória e para te lembrar, todos os dias ao acordar, o quanto você é amada, cuidada e admirada.
+          </p>
+          <p>
+            Que a sua vida adulta seja recheada de risadas bobas, abraços apertados, passeios inesquecíveis, doces gostosos e muita felicidade. Parabéns pelos seus 18 anos, meu pedacinho do céu!
+          </p>
+        </div>
+
+        <div class="letter-sign">
+          Com todo o amor que existe em mim,<br />
+          Para sempre o seu amor 💖🐾
+        </div>
+      </article>
+
+      <!-- Vitrine com Pompompurin em Destaque & Amigos Sanrio -->
+      <section class="sanrio-mascots-showcase">
+        <h3 class="sanrio-showcase-title">O Quintal dos Seus Personagens Favoritos</h3>
+        <p class="sanrio-showcase-sub">Com o querido Pompompurin liderando a festa com seu bolinho de 18 anos e amigos doces!</p>
+
+        <div class="mascots-grid">
+          <!-- Pompompurin Principal com Bolo de 18 Anos -->
+          <div class="mascot-card star-purin" title="Clique para ver o Pompompurin pular!">
+            <div class="mascot-svg-wrap svg-pompompurin-cake"></div>
+            <span class="mascot-name">Pompompurin 🍮</span>
+            <span class="mascot-role">Estrela da Festa • Bolo 18 Anos</span>
+          </div>
+
+          <!-- Hello Kitty -->
+          <div class="mascot-card" title="Clique para interagir!">
+            <div class="mascot-svg-wrap svg-hello-kitty"></div>
+            <span class="mascot-name">Hello Kitty 🎀</span>
+            <span class="mascot-role">Laço de Puro Afeto</span>
+          </div>
+
+          <!-- My Melody -->
+          <div class="mascot-card" title="Clique para interagir!">
+            <div class="mascot-svg-wrap svg-my-melody"></div>
+            <span class="mascot-name">My Melody 🌸</span>
+            <span class="mascot-role">Doçura & Ternura</span>
+          </div>
+
+          <!-- Cinnamoroll -->
+          <div class="mascot-card" title="Clique para interagir!">
+            <div class="mascot-svg-wrap svg-cinnamoroll"></div>
+            <span class="mascot-name">Cinnamoroll ☁️</span>
+            <span class="mascot-role">Abraço de Nuvem</span>
+          </div>
+
+          <!-- Kuromi -->
+          <div class="mascot-card" title="Clique para interagir!">
+            <div class="mascot-svg-wrap svg-kuromi"></div>
+            <span class="mascot-name">Kuromi 💜</span>
+            <span class="mascot-role">Charme & Estilo</span>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         ABA 2: MURAL DE GALERIA DO MEU NENÉM (FOTOS SALVAS PARA SEMPRE)
+         ---------------------------------------------------------------------- -->
+    <section id="tab-gallery" class="tab-pane">
+      <header class="gallery-section-header">
+        <h2 class="gallery-section-title">Mural de Galeria do Meu Neném</h2>
+        <p class="gallery-section-subtitle">
+          Cada foto guardada aqui fica salva <strong>para sempre</strong> no seu navegador! Você pode adicionar as nossas melhores lembranças, fotos especiais do seu aniversário ou os nossos momentos favoritos juntos.
+        </p>
+
+        <div class="gallery-actions-bar">
+          <button id="btn-open-photo-modal" class="btn-add-photo">
+            <span>📷 Adicionar Nova Fotinha</span>
+            <span>✨</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Grid de Polaroids em Madeira/Pastel -->
+      <div id="polaroids-grid" class="polaroids-grid">
+        <!-- Renderizado dinamicamente via IndexedDB em script.js -->
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         ABA 3: JOGO DE PALAVRAS DO CASAL ("TERMO DO AMOR")
+         ---------------------------------------------------------------------- -->
+    <section id="tab-words" class="tab-pane">
+      <header class="wordgame-section-header">
+        <h2 class="wordgame-title">Jogo de Palavras do Casal</h2>
+        <p class="wordgame-subtitle">Descubra as palavras secretas que representam o nosso amor e o que você é para mim!</p>
+      </header>
+
+      <div class="termo-card-container">
+        <div class="termo-hint-box">
+          <span style="font-size: 1.3rem;">💡</span>
+          <span id="termo-hint-text">Dica: Carregando...</span>
+        </div>
+
+        <div style="font-size: 0.82rem; font-family: var(--font-pill); color: var(--purin-soft-brown); margin-bottom: 12px;">
+          <span id="termo-word-counter">Palavra 1 de 6</span> • 6 Tentativas
+        </div>
+
+        <!-- Tabuleiro 6x5 do Termo -->
+        <div id="termo-board" class="termo-board">
+          <!-- Gerado dinamicamente via JS -->
+        </div>
+
+        <!-- Teclado Virtual Interativo -->
+        <div id="virtual-keyboard" class="virtual-keyboard">
+          <!-- Gerado dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         ABA 4: ÁRVORE DE PRESENTES (IMAGEM EXPANSÍVEL & EDITÁVEL)
+         ---------------------------------------------------------------------- -->
+    <section id="tab-tree" class="tab-pane">
+      <header class="tree-section-header">
+        <h2 class="tree-title">Nossa Árvore de Presentes</h2>
+        <p class="tree-subtitle">
+          Nos galhos desta árvore mágica florescem surpresas, vales especiais e presentes preparados com todo o amor. <strong>Clique em qualquer presente para expandir</strong>, e você poderá inclusive adicionar ou alterar as fotos manualmente!
+        </p>
+      </header>
+
+      <!-- Palco Interativo da Árvore Mágica -->
+      <div id="tree-interactive-stage" class="tree-interactive-stage">
+        <!-- Arte da Árvore em SVG com Flores e Folhas em Tons Pastel -->
+        <svg class="tree-svg-art" viewBox="0 0 500 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Tronco e Galhos Elegantes com Textura Macia -->
+          <path d="M 230 450 C 230 380, 190 320, 210 240 C 215 220, 180 180, 140 160 C 130 155, 120 160, 100 170" stroke="#795548" stroke-width="26" stroke-linecap="round"/>
+          <path d="M 270 450 C 270 380, 310 320, 290 240 C 285 220, 320 180, 360 150 C 375 140, 395 145, 410 155" stroke="#795548" stroke-width="24" stroke-linecap="round"/>
+          <path d="M 250 300 L 250 120" stroke="#6D4C41" stroke-width="22" stroke-linecap="round"/>
+          <path d="M 250 200 C 230 160, 180 130, 170 100" stroke="#6D4C41" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 250 180 C 280 150, 320 120, 340 90" stroke="#6D4C41" stroke-width="16" stroke-linecap="round"/>
+
+          <!-- Copa Florida em Tons de Rosa Sakura, Creme e Baunilha -->
+          <circle cx="130" cy="140" r="65" fill="#FFC1E3" opacity="0.85"/>
+          <circle cx="210" cy="110" r="75" fill="#FFE082" opacity="0.8"/>
+          <circle cx="290" cy="100" r="80" fill="#FF80AB" opacity="0.75"/>
+          <circle cx="370" cy="130" r="70" fill="#FFF9C4" opacity="0.85"/>
+          <circle cx="250" cy="70" r="75" fill="#FF85A2" opacity="0.8"/>
+          <circle cx="180" cy="160" r="60" fill="#F8BBD0" opacity="0.9"/>
+          <circle cx="320" cy="160" r="65" fill="#FFE57F" opacity="0.85"/>
+
+          <!-- Folhinhas e Flores de Cerejeira -->
+          <g transform="translate(180, 80)">
+            <circle cx="0" cy="0" r="9" fill="#FFF"/>
+            <circle cx="-10" cy="0" r="7" fill="#FF4081"/>
+            <circle cx="10" cy="0" r="7" fill="#FF4081"/>
+            <circle cx="0" cy="-10" r="7" fill="#FF4081"/>
+            <circle cx="0" cy="10" r="7" fill="#FF4081"/>
+            <circle cx="0" cy="0" r="4" fill="#FFD54F"/>
+          </g>
+          <g transform="translate(320, 90)">
+            <circle cx="0" cy="0" r="9" fill="#FFF"/>
+            <circle cx="-10" cy="0" r="7" fill="#FF80AB"/>
+            <circle cx="10" cy="0" r="7" fill="#FF80AB"/>
+            <circle cx="0" cy="-10" r="7" fill="#FF80AB"/>
+            <circle cx="0" cy="10" r="7" fill="#FF80AB"/>
+            <circle cx="0" cy="0" r="4" fill="#FFD54F"/>
+          </g>
+
+          <!-- Pompompurin sentado no pé da árvore -->
+          <g transform="translate(210, 360) scale(0.45)">
+            <ellipse cx="100" cy="140" rx="55" ry="42" fill="#FFE082" stroke="#5D4037" stroke-width="3"/>
+            <path d="M 80 85 C 80 75, 120 75, 120 85 Z" fill="#5D4037"/>
+            <circle cx="85" cy="130" r="4" fill="#5D4037"/>
+            <circle cx="115" cy="130" r="4" fill="#5D4037"/>
+            <ellipse cx="100" cy="136" rx="4" ry="3" fill="#5D4037"/>
+          </g>
+        </svg>
+
+        <!-- Presentes Pendurados nos Galhos (Injetados dinamicamente via JS) -->
+      </div>
+
+      <div style="display: flex; justify-content: center; margin-top: 22px;">
+        <button id="btn-open-new-tree-gift" class="btn-add-tree-gift">
+          <span>🎁 Pendurar Mais um Presente na Árvore</span>
+          <span>✨</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         ABA 5: CONCLUSÃO ("O COMEÇO DA VIDA ADULTA & O COMEÇO DE NÓS DOIS")
+         ---------------------------------------------------------------------- -->
+    <section id="tab-conclusion" class="tab-pane">
+      <article class="conclusion-container">
+        <div class="conclusion-header-badge">
+          <span class="conclusion-badge-pill">✨ O PORTAL DOS 18 ANOS • NOSSO FUTURO JUNTOS ✨</span>
+        </div>
+
+        <h2 class="conclusion-title">O Começo da Vida Adulta & O Começo de Nós</h2>
+        <p class="conclusion-subtitle">O primeiro de infinitos aniversários, anos e sonhos ao seu lado</p>
+
+        <div class="conclusion-text">
+          <p>
+            Chegar aos 18 anos traz consigo um misto de sensações: a responsabilidade bate à porta, o mundo parece maior e mais veloz, e tantas decisões começam a surgir. Mas há uma verdade que resplandece acima de qualquer mudança: <strong>este não é apenas o começo da sua vida adulta, é o começo oficial da nossa história como um casal maduro, forte e inseparável.</strong>
+          </p>
+          <p>
+            Se a vida adulta assusta por parecer séria demais, prometo ser o seu porto seguro onde você sempre poderá ser livre, boba, risonha e acolhida. Prometo rir das suas manias fofas, te apoiar em cada plano da faculdade, da carreira ou dos seus maiores sonhos, e segurar a sua mão em cada curva do caminho.
+          </p>
+          <p>
+            Mais importante do que qualquer número de aniversário, o que faz este 30 de setembro ser eterno é saber que <strong>este é apenas o primeiro de dezenas e dezenas de aniversários que vamos comemorar juntos</strong>. Quero estar ao seu lado nos seus 19, nos seus 20, nos seus 30, nos seus 50 e até quando tivermos o cabelo branquinho, ainda nos olhando com a mesma paixão de hoje.
+          </p>
+        </div>
+
+        <!-- Quadro de Votos & Promessa Eterna -->
+        <div class="love-pledge-box">
+          <p class="pledge-quote">
+            "A vida adulta é o palco onde nossos sonhos se tornam realidade, e o meu maior sonho já se cumpriu: ter você para a vida inteira."
+          </p>
+          <p class="pledge-subquote">Pacto Selado em 30 de Setembro • Amor Para Sempre</p>
+
+          <!-- Selar Promessa com Nomes -->
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px;">
+            <input type="text" id="partner-name-input" class="form-input" style="max-width: 200px; text-align: center;" placeholder="Nome do Meu Neném" value="Meu Neném" />
+            <input type="text" id="your-name-input" class="form-input" style="max-width: 200px; text-align: center;" placeholder="Seu Nome" value="Seu Amor" />
+            <button id="btn-seal-promise" class="btn-open-gift" style="padding: 10px 22px; font-size: 0.95rem;">
+              <span>📜 Selar Nossa Promessa</span>
+            </button>
+          </div>
+          <div id="pledge-status-msg"></div>
+        </div>
+
+        <div class="conclusion-footer-actions">
+          <button id="btn-love-explosion" class="btn-love-explosion">
+            <span>🎉 Chuva de Amor & Parabéns!</span>
+            <span>💖</span>
+          </button>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: ADICIONAR NOVA FOTO NO MURAL (INTEGRAÇÃO PERMANENTE INDEXEDDB)
+       ========================================================================== -->
+  <div id="photo-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <button id="close-photo-modal" class="modal-close-btn">✕</button>
+      <h3 class="modal-title">Adicionar Lembrança ao Mural</h3>
+      <p class="modal-subtitle">Escolha uma foto do seu aparelho para guardar aqui para sempre no mural do seu neném!</p>
+
+      <div class="form-group">
+        <label class="form-label">Selecione a Fotinha:</label>
+        <input type="file" id="photo-file-input" accept="image/*" class="form-input" />
+        <div id="photo-preview-box" class="img-preview-box">
+          <span style="color:#8D6E63; font-size:0.9rem;">Nenhuma foto selecionada ainda 📷</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Legenda da Foto (Frase de Amor):</label>
+        <input type="text" id="photo-caption-input" class="form-input" placeholder="Ex: O dia mais feliz com você 💖" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Data ou Ocasião Especial:</label>
+        <input type="text" id="photo-date-input" class="form-input" placeholder="Ex: 30 de Setembro • Nosso Dia" />
+      </div>
+
+      <button id="btn-save-photo" class="btn-open-gift" style="width: 100%; justify-content: center;">
+        <span>Salvar no Mural Para Sempre 💖</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: VER & EXPANDIR PRESENTE DA ÁRVORE (COM UPLOAD DE IMAGEM MANUAL)
+       ========================================================================== -->
+  <div id="tree-gift-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <button id="close-tree-gift-modal" class="modal-close-btn">✕</button>
+      <h3 id="gift-modal-title" class="modal-title">Título do Presente</h3>
+      <p id="gift-modal-desc" class="modal-subtitle" style="font-size: 1.05rem; line-height: 1.6; color: var(--purin-brown);"></p>
+
+      <!-- Imagem do Presente Expandida -->
+      <img id="gift-modal-img" class="gift-view-img" src="" alt="Presente Especial" />
+
+      <!-- Botão para carregar imagem manual -->
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button id="btn-change-gift-img" class="btn-gallery-backup" style="border-color: #FF80AB; color: #C2185B;">
+          <span>🖼️ Alterar / Colocar Minha Imagem Manualmente</span>
+        </button>
+        <input type="file" id="gift-img-file-input" accept="image/*" style="display: none;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADICIONAR NOVO PRESENTE NA ÁRVORE -->
+  <div id="new-tree-gift-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <button id="close-new-tree-gift-modal" class="modal-close-btn">✕</button>
+      <h3 class="modal-title">Pendurar Novo Presente</h3>
+      <p class="modal-subtitle">Crie um vale surpresa ou presente especial para pendurar na árvore mágica!</p>
+
+      <div class="form-group">
+        <label class="form-label">Título do Presente ou Vale:</label>
+        <input type="text" id="new-gift-title" class="form-input" placeholder="Ex: Vale Massagem & Carinho 💆‍♀️" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mensagem Especial / Descrição:</label>
+        <textarea id="new-gift-desc" class="form-textarea" rows="3" placeholder="Ex: Válido para aquele dia em que tudo o que você precisa é relaxar no meu abraço..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Imagem ou Foto da Surpresa:</label>
+        <input type="file" id="new-gift-img-file" accept="image/*" class="form-input" />
+        <div id="new-gift-preview-box" class="img-preview-box">
+          <span style="color:#8D6E63; font-size:0.9rem;">Selecione uma imagem para este presente 🎁</span>
+        </div>
+      </div>
+
+      <button id="btn-save-new-tree-gift" class="btn-open-gift" style="width: 100%; justify-content: center;">
+        <span>Pendurar na Árvore Para Sempre 🌳💖</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: LIGHTBOX (VISUALIZAÇÃO DE FOTO GRANDE)
+       ========================================================================== -->
+  <div id="lightbox-modal" class="modal-backdrop" onclick="this.classList.remove('open')">
+    <div class="modal-card" style="max-width: 680px; text-align: center;" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="document.getElementById('lightbox-modal').classList.remove('open')">✕</button>
+      <img id="lightbox-img" src="" style="width: 100%; max-height: 520px; object-fit: contain; border-radius: 12px; margin-bottom: 14px;" />
+      <h4 id="lightbox-caption" style="font-family: var(--font-script); font-size: 1.8rem; color: var(--purin-brown);"></h4>
+      <p id="lightbox-date" style="font-family: var(--font-pill); font-size: 0.85rem; color: var(--purin-soft-brown);"></p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: VITÓRIA NO JOGO DE PALAVRAS
+       ========================================================================== -->
+  <div id="termo-win-modal" class="modal-backdrop">
+    <div class="modal-card" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🎉🐾💖</div>
+      <h3 class="modal-title">Você Acertou, Meu Amor!</h3>
+      <p id="termo-win-message" class="modal-subtitle" style="font-size: 1.1rem; line-height: 1.6; margin: 15px 0; color: #4A3E3D;"></p>
+      
+      <button id="btn-next-word" class="btn-open-gift" style="margin: 0 auto;">
+        <span>Próxima Palavrinha do Nosso Amor ✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       RODAPÉ DO SITE
+       ========================================================================== -->
+  <footer class="site-footer">
+    <p>Criado com todo o amor do universo para celebrar os seus 18 anos • 🎂💖</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+      <a id="reopen-gift-link" class="reopen-gift-link">🎁 Rever a abertura de presente</a>
+      <a id="lock-site-link" class="reopen-gift-link" style="color: #795548;">🔒 Bloquear com Senha</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/sanrio.js"></script>
+  <script src="audio-player.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
